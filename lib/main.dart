@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/di/injection.dart';
 import 'package:flutter_map/presentation/common/colors.dart';
+import 'package:flutter_map/presentation/partner/list/bloc/partner_list_bloc.dart';
+import 'package:flutter_map/presentation/partner/list/cubit/partner_list_cubit.dart';
 import 'package:flutter_map/presentation/partner/main/screen/partner_main_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -15,9 +17,15 @@ void main() async {
     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   }
 
-  runApp(
-    const PartnerMainScreen(),
-  );
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => getIt<PartnerListCubit>()),
+      BlocProvider(
+        create: (context) => getIt<PartnerListBloc>(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,11 +34,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Partner',
+      title: 'Map & Partner',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Scaffold(
+        body: Container(
+          child: Align(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20)),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PartnerMainScreen()),
+              ),
+              child: const Text('Map & Partner Screen'),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
