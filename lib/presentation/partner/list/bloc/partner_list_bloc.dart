@@ -9,6 +9,7 @@ import 'package:flutter_map/presentation/partner/list/cubit/partner_list_cubit.d
     as cbt;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:rxdart/rxdart.dart';
 
@@ -58,7 +59,23 @@ class PartnerListBloc extends Bloc<PartnerListEvent, PartnerListState> {
     emit(state.copyWith(status: const StateStatus.loading()));
     await Future.delayed(Duration(milliseconds: 1000));
     debugPrint("PARTNER LIST BLOC DATA ${event.partners}");
-    emit(state.copyWith(status: StateStatus.success(data: event.partners)));
+
+    final me = -6.1512628884473175;
+    final me1 = 106.89188416785417;
+
+    List<Partner> r = List<Partner>.from(
+        event.partners == null ? [] : event.partners!.toList());
+
+    r.sort((a, b) =>
+        (Geolocator.distanceBetween(me, me1, a.latitude, a.longitude).round() /
+                1000)
+            .compareTo(
+                (Geolocator.distanceBetween(me, me1, b.latitude, b.longitude)
+                        .round() /
+                    1000)));
+
+    emit(state.copyWith(
+        status: StateStatus.success(data: r.isEmpty ? null : r)));
   }
 
   @override
