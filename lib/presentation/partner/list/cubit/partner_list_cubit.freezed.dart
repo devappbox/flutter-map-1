@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$PartnerListState {
   List<Partner>? get partners => throw _privateConstructorUsedError;
-  String? get keyWord => throw _privateConstructorUsedError;
+  StateStatus<FailureExceptions, List<Partner>> get status =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PartnerListStateCopyWith<PartnerListState> get copyWith =>
@@ -29,7 +30,11 @@ abstract class $PartnerListStateCopyWith<$Res> {
   factory $PartnerListStateCopyWith(
           PartnerListState value, $Res Function(PartnerListState) then) =
       _$PartnerListStateCopyWithImpl<$Res>;
-  $Res call({List<Partner>? partners, String? keyWord});
+  $Res call(
+      {List<Partner>? partners,
+      StateStatus<FailureExceptions, List<Partner>> status});
+
+  $StateStatusCopyWith<FailureExceptions, List<Partner>, $Res> get status;
 }
 
 /// @nodoc
@@ -44,18 +49,26 @@ class _$PartnerListStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? partners = freezed,
-    Object? keyWord = freezed,
+    Object? status = freezed,
   }) {
     return _then(_value.copyWith(
       partners: partners == freezed
           ? _value.partners
           : partners // ignore: cast_nullable_to_non_nullable
               as List<Partner>?,
-      keyWord: keyWord == freezed
-          ? _value.keyWord
-          : keyWord // ignore: cast_nullable_to_non_nullable
-              as String?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as StateStatus<FailureExceptions, List<Partner>>,
     ));
+  }
+
+  @override
+  $StateStatusCopyWith<FailureExceptions, List<Partner>, $Res> get status {
+    return $StateStatusCopyWith<FailureExceptions, List<Partner>, $Res>(
+        _value.status, (value) {
+      return _then(_value.copyWith(status: value));
+    });
   }
 }
 
@@ -66,7 +79,12 @@ abstract class _$$_PartnerListStateCopyWith<$Res>
           _$_PartnerListState value, $Res Function(_$_PartnerListState) then) =
       __$$_PartnerListStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Partner>? partners, String? keyWord});
+  $Res call(
+      {List<Partner>? partners,
+      StateStatus<FailureExceptions, List<Partner>> status});
+
+  @override
+  $StateStatusCopyWith<FailureExceptions, List<Partner>, $Res> get status;
 }
 
 /// @nodoc
@@ -83,17 +101,17 @@ class __$$_PartnerListStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? partners = freezed,
-    Object? keyWord = freezed,
+    Object? status = freezed,
   }) {
     return _then(_$_PartnerListState(
       partners: partners == freezed
           ? _value._partners
           : partners // ignore: cast_nullable_to_non_nullable
               as List<Partner>?,
-      keyWord: keyWord == freezed
-          ? _value.keyWord
-          : keyWord // ignore: cast_nullable_to_non_nullable
-              as String?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as StateStatus<FailureExceptions, List<Partner>>,
     ));
   }
 }
@@ -104,7 +122,7 @@ class _$_PartnerListState
     with DiagnosticableTreeMixin
     implements _PartnerListState {
   const _$_PartnerListState(
-      {required final List<Partner>? partners, required this.keyWord})
+      {required final List<Partner>? partners, required this.status})
       : _partners = partners;
 
   final List<Partner>? _partners;
@@ -117,11 +135,11 @@ class _$_PartnerListState
   }
 
   @override
-  final String? keyWord;
+  final StateStatus<FailureExceptions, List<Partner>> status;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PartnerListState(partners: $partners, keyWord: $keyWord)';
+    return 'PartnerListState(partners: $partners, status: $status)';
   }
 
   @override
@@ -130,7 +148,7 @@ class _$_PartnerListState
     properties
       ..add(DiagnosticsProperty('type', 'PartnerListState'))
       ..add(DiagnosticsProperty('partners', partners))
-      ..add(DiagnosticsProperty('keyWord', keyWord));
+      ..add(DiagnosticsProperty('status', status));
   }
 
   @override
@@ -139,14 +157,14 @@ class _$_PartnerListState
         (other.runtimeType == runtimeType &&
             other is _$_PartnerListState &&
             const DeepCollectionEquality().equals(other._partners, _partners) &&
-            const DeepCollectionEquality().equals(other.keyWord, keyWord));
+            const DeepCollectionEquality().equals(other.status, status));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_partners),
-      const DeepCollectionEquality().hash(keyWord));
+      const DeepCollectionEquality().hash(status));
 
   @JsonKey(ignore: true)
   @override
@@ -157,12 +175,13 @@ class _$_PartnerListState
 abstract class _PartnerListState implements PartnerListState {
   const factory _PartnerListState(
       {required final List<Partner>? partners,
-      required final String? keyWord}) = _$_PartnerListState;
+      required final StateStatus<FailureExceptions, List<Partner>>
+          status}) = _$_PartnerListState;
 
   @override
   List<Partner>? get partners;
   @override
-  String? get keyWord;
+  StateStatus<FailureExceptions, List<Partner>> get status;
   @override
   @JsonKey(ignore: true)
   _$$_PartnerListStateCopyWith<_$_PartnerListState> get copyWith =>
