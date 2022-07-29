@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_map/application/partner/partner_service.dart';
 import 'package:flutter_map/domain/exception/failure/failure_exceptions.dart';
@@ -18,8 +19,16 @@ class PartnerListCubit extends Cubit<PartnerListState> {
   late PartnerService _partnerService;
 
   onStarted() async {
-    List<Partner> p = await _partnerService.getAllPartners();
-    emit(state.copyWith(partners: p));
+    emit(state.copyWith(status: StateStatus.loading()));
+    Either<FailureExceptions, List<Partner>> p =
+        await _partnerService.getAllPartners();
+    await Future.delayed(Duration(milliseconds: 1000));
+    p.fold((l) {
+      emit(state.copyWith(status: StateStatus.failure(failure: l)));
+    }, (r) {
+      emit(state.copyWith(
+          status: StateStatus.success(data: r.isEmpty ? null : r)));
+    });
   }
 
   // onSearchKeyChanged(String v) {

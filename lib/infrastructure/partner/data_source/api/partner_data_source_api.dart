@@ -4,8 +4,12 @@ import '../dto/dto_partner.dart';
 
 class PartnerDataSourceApi {
   Future<List<DtoPartner>> getAllPartners() async {
-    return PARTNER_FAKE_DATA
-        .map((e) => DtoPartner.fromPartnerFakeData(e))
-        .toList();
+    try {
+      return PARTNER_FAKE_DATA
+          .map((e) => DtoPartner.fromPartnerFakeData(e))
+          .toList();
+    } catch (e) {
+      throw (e);
+    }
   }
 }

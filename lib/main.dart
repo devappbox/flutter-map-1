@@ -1,15 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/di/injection.dart';
 import 'package:flutter_map/presentation/common/colors.dart';
+import 'package:flutter_map/presentation/partner/main/screen/partner_main_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureGetIt();
+
   if (defaultTargetPlatform == TargetPlatform.android) {
     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
   }
 
-  runApp(const MyApp());
+  runApp(
+    const PartnerMainScreen(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Map Demo',
+      title: 'Partner',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

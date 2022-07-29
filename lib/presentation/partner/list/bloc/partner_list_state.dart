@@ -1,4 +1,4 @@
-part of 'partner_list_cubit.dart';
+part of 'partner_list_bloc.dart';
 
 @freezed
 class PartnerListState with _$PartnerListState {
