@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_map/application/partner/partner_service.dart';
+import 'package:flutter_map/application/partner/i_partner_service.dart';
 import 'package:flutter_map/domain/exception/failure/failure_exceptions.dart';
 import 'package:flutter_map/domain/partner/entity/partner.dart';
 import 'package:flutter_map/presentation/common/state/state_status.dart';
@@ -11,12 +11,12 @@ part 'partner_list_state.dart';
 part 'partner_list_cubit.freezed.dart';
 
 class PartnerListCubit extends Cubit<PartnerListState> {
-  final PartnerService partnerService;
+  final IPartnerService partnerService;
   PartnerListCubit({required this.partnerService})
       : _partnerService = partnerService,
         super(PartnerListState.initial());
 
-  late PartnerService _partnerService;
+  late IPartnerService _partnerService;
 
   onStarted() async {
     emit(state.copyWith(status: StateStatus.loading()));

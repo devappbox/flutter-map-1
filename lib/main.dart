@@ -22,6 +22,7 @@ void main() async {
       BlocProvider(create: (context) => getIt<PartnerListCubit>()),
       BlocProvider(
         create: (context) => getIt<PartnerListBloc>(),
+        lazy: false,
       ),
     ],
     child: const MyApp(),
@@ -34,27 +35,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Map & Partner',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        body: Container(
-          child: Align(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 20)),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const PartnerMainScreen()),
-              ),
-              child: const Text('Map & Partner Screen'),
-            ),
-          ),
+        title: 'Map & Partner',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
-      ),
-    );
+        home: Builder(
+          builder: ((context) => Scaffold(
+                body: Container(
+                  child: Align(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 20)),
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PartnerMainScreen()),
+                      ),
+                      child: const Text('Map & Partner Screen'),
+                    ),
+                  ),
+                ),
+              )),
+        ));
   }
 }
 

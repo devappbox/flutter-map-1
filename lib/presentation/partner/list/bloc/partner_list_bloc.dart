@@ -57,6 +57,7 @@ class PartnerListBloc extends Bloc<PartnerListEvent, PartnerListState> {
   ) async {
     emit(state.copyWith(status: const StateStatus.loading()));
     await Future.delayed(Duration(milliseconds: 1000));
+    debugPrint("PARTNER LIST BLOC DATA ${event.partners}");
     emit(state.copyWith(status: StateStatus.success(data: event.partners)));
   }
 

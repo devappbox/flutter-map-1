@@ -24,7 +24,8 @@ mixin _$Partner {
   String get name => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
-  String get latLong => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
   List<int> get services => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +42,8 @@ abstract class $PartnerCopyWith<$Res> {
       String name,
       String address,
       String phoneNumber,
-      String latLong,
+      double latitude,
+      double longitude,
       List<int> services});
 }
 
@@ -59,7 +61,8 @@ class _$PartnerCopyWithImpl<$Res> implements $PartnerCopyWith<$Res> {
     Object? name = freezed,
     Object? address = freezed,
     Object? phoneNumber = freezed,
-    Object? latLong = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
     Object? services = freezed,
   }) {
     return _then(_value.copyWith(
@@ -79,10 +82,14 @@ class _$PartnerCopyWithImpl<$Res> implements $PartnerCopyWith<$Res> {
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      latLong: latLong == freezed
-          ? _value.latLong
-          : latLong // ignore: cast_nullable_to_non_nullable
-              as String,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
       services: services == freezed
           ? _value.services
           : services // ignore: cast_nullable_to_non_nullable
@@ -102,7 +109,8 @@ abstract class _$$_PartnerCopyWith<$Res> implements $PartnerCopyWith<$Res> {
       String name,
       String address,
       String phoneNumber,
-      String latLong,
+      double latitude,
+      double longitude,
       List<int> services});
 }
 
@@ -121,7 +129,8 @@ class __$$_PartnerCopyWithImpl<$Res> extends _$PartnerCopyWithImpl<$Res>
     Object? name = freezed,
     Object? address = freezed,
     Object? phoneNumber = freezed,
-    Object? latLong = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
     Object? services = freezed,
   }) {
     return _then(_$_Partner(
@@ -141,10 +150,14 @@ class __$$_PartnerCopyWithImpl<$Res> extends _$PartnerCopyWithImpl<$Res>
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      latLong: latLong == freezed
-          ? _value.latLong
-          : latLong // ignore: cast_nullable_to_non_nullable
-              as String,
+      latitude: latitude == freezed
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: longitude == freezed
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
       services: services == freezed
           ? _value._services
           : services // ignore: cast_nullable_to_non_nullable
@@ -161,7 +174,8 @@ class _$_Partner extends _Partner {
       required this.name,
       required this.address,
       required this.phoneNumber,
-      required this.latLong,
+      required this.latitude,
+      required this.longitude,
       required final List<int> services})
       : _services = services,
         super._();
@@ -178,7 +192,9 @@ class _$_Partner extends _Partner {
   @override
   final String phoneNumber;
   @override
-  final String latLong;
+  final double latitude;
+  @override
+  final double longitude;
   final List<int> _services;
   @override
   List<int> get services {
@@ -188,7 +204,7 @@ class _$_Partner extends _Partner {
 
   @override
   String toString() {
-    return 'Partner(id: $id, name: $name, address: $address, phoneNumber: $phoneNumber, latLong: $latLong, services: $services)';
+    return 'Partner(id: $id, name: $name, address: $address, phoneNumber: $phoneNumber, latitude: $latitude, longitude: $longitude, services: $services)';
   }
 
   @override
@@ -201,7 +217,8 @@ class _$_Partner extends _Partner {
             const DeepCollectionEquality().equals(other.address, address) &&
             const DeepCollectionEquality()
                 .equals(other.phoneNumber, phoneNumber) &&
-            const DeepCollectionEquality().equals(other.latLong, latLong) &&
+            const DeepCollectionEquality().equals(other.latitude, latitude) &&
+            const DeepCollectionEquality().equals(other.longitude, longitude) &&
             const DeepCollectionEquality().equals(other._services, _services));
   }
 
@@ -213,7 +230,8 @@ class _$_Partner extends _Partner {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(address),
       const DeepCollectionEquality().hash(phoneNumber),
-      const DeepCollectionEquality().hash(latLong),
+      const DeepCollectionEquality().hash(latitude),
+      const DeepCollectionEquality().hash(longitude),
       const DeepCollectionEquality().hash(_services));
 
   @JsonKey(ignore: true)
@@ -235,7 +253,8 @@ abstract class _Partner extends Partner {
       required final String name,
       required final String address,
       required final String phoneNumber,
-      required final String latLong,
+      required final double latitude,
+      required final double longitude,
       required final List<int> services}) = _$_Partner;
   const _Partner._() : super._();
 
@@ -250,7 +269,9 @@ abstract class _Partner extends Partner {
   @override
   String get phoneNumber;
   @override
-  String get latLong;
+  double get latitude;
+  @override
+  double get longitude;
   @override
   List<int> get services;
   @override

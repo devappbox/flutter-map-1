@@ -12,7 +12,8 @@ class Partner with _$Partner implements IEntity {
     required String name,
     required String address,
     required String phoneNumber,
-    required String latLong,
+    required double latitude,
+    required double longitude,
     required List<int> services,
   }) = _Partner;
 

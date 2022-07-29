@@ -12,7 +12,8 @@ class DtoPartner with _$DtoPartner {
     required String name,
     required String address,
     required String phoneNumber,
-    required String latLong,
+    required double latitude,
+    required double longitude,
     required List<int> services,
   }) = _DtoPartner;
 
@@ -22,8 +23,9 @@ class DtoPartner with _$DtoPartner {
           name: partnerJson["name"],
           address: partnerJson["address"],
           phoneNumber: partnerJson["phoneNumber"],
-          latLong: partnerJson["lat"] + "," + partnerJson["long"],
-          services: partnerJson["service"]);
+          latitude: partnerJson["latitude"],
+          longitude: partnerJson["longitude"],
+          services: partnerJson["services"]);
 
   factory DtoPartner.fromJson(Map<String, dynamic> json) =>
       _$DtoPartnerFromJson(json);
@@ -36,7 +38,8 @@ extension DtoPartnerX on DtoPartner {
         name: name,
         address: address,
         phoneNumber: phoneNumber,
-        latLong: latLong,
+        latitude: latitude,
+        longitude: longitude,
         services: services);
   }
 }

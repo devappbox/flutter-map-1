@@ -36,7 +36,7 @@ class _PartnerMainScreenState extends State<PartnerMainScreen> {
                 )),
             failure: (failure) => Align(
                     child: Text(
-                  "Terjadi Kesalahan ${FailureExceptions.getErrorMessage(failure)}",
+                  "Terjadi Kesalahan, ${FailureExceptions.getErrorMessage(failure)}",
                   style: TextStyle(
                     fontSize: 17.0,
                     color: Colors.blue,
