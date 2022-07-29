@@ -16,7 +16,7 @@ class PartnerMapWidget extends StatefulWidget {
 class _PartnerMapWidgetState extends State<PartnerMapWidget> {
   late GoogleMapController _googleMapController;
   Completer<GoogleMapController> _controller = Completer();
-  double _pad = 100;
+  double _pad = 0;
 
   @override
   void initState() {
@@ -89,14 +89,32 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
               },
             );
           },
-          loading: () => Align(
-                  child: Text(
-                "Sedang Mengambil Data...",
-                style: TextStyle(
-                  fontSize: 17.0,
-                  color: Colors.blue,
+          loading: () => GoogleMap(
+                buildingsEnabled: false,
+                rotateGesturesEnabled: false,
+                //myLocationEnabled: true,
+                //myLocationButtonEnabled: true,
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(-6.1512628884473175, 106.89188416785417),
+                  zoom: 14,
                 ),
-              )),
+                //markers: Set<Marker>.of(_markers),
+                padding: EdgeInsets.only(bottom: _pad),
+                onMapCreated: (controller) async {
+                  _googleMapController = controller;
+                  _controller.complete(controller);
+                  await Future.delayed(Duration(milliseconds: 100));
+                  setState(() {});
+                  _pad = 200;
+
+                  await Future.delayed(Duration(milliseconds: 100));
+                  _googleMapController.animateCamera(
+                      CameraUpdate.newCameraPosition(CameraPosition(
+                          target:
+                              LatLng(-6.1512628884473175, 106.89188416785417),
+                          zoom: 14)));
+                },
+              ),
           failure: (f) => GoogleMap(
                 buildingsEnabled: false,
                 rotateGesturesEnabled: false,
@@ -107,8 +125,21 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                   zoom: 14,
                 ),
                 //markers: Set<Marker>.of(_markers),
-                //padding: EdgeInsets.only(bottom: _pad, top: _pad1),
-                onMapCreated: (controller) async {},
+                padding: EdgeInsets.only(bottom: _pad),
+                onMapCreated: (controller) async {
+                  _googleMapController = controller;
+                  _controller.complete(controller);
+                  await Future.delayed(Duration(milliseconds: 100));
+                  setState(() {});
+                  _pad = 200;
+
+                  await Future.delayed(Duration(milliseconds: 100));
+                  _googleMapController.animateCamera(
+                      CameraUpdate.newCameraPosition(CameraPosition(
+                          target:
+                              LatLng(-6.1512628884473175, 106.89188416785417),
+                          zoom: 14)));
+                },
               ));
     })));
   }

@@ -46,9 +46,57 @@ class PartnerListBloc extends Bloc<PartnerListEvent, PartnerListState> {
     Emitter<PartnerListState> emit,
   ) async {
     if (event.keyWord.isEmpty) {
-      emit(state.copyWith(status: const StateStatus.initial()));
+      _partnerListCubit.state.status.maybeWhen(
+          success: (data) async {
+            emit(state.copyWith(status: const StateStatus.loading()));
+
+            final me = -6.1512628884473175;
+            final me1 = 106.89188416785417;
+
+            List<Partner> r =
+                List<Partner>.from(data == null ? [] : data.toList());
+
+            r.sort((a, b) =>
+                (Geolocator.distanceBetween(me, me1, a.latitude, a.longitude)
+                            .round() /
+                        1000)
+                    .compareTo((Geolocator.distanceBetween(
+                                me, me1, b.latitude, b.longitude)
+                            .round() /
+                        1000)));
+
+            emit(state.copyWith(
+                status: StateStatus.success(data: r.isEmpty ? null : r)));
+          },
+          orElse: () => null);
     } else {
-      emit(state.copyWith(status: const StateStatus.loading()));
+      _partnerListCubit.state.status.maybeWhen(
+          success: (data) async {
+            emit(state.copyWith(status: const StateStatus.loading()));
+
+            final me = -6.1512628884473175;
+            final me1 = 106.89188416785417;
+            List<Partner>? r = [];
+
+            data?.forEach((e) {
+              if (e.name.toLowerCase().contains(event.keyWord.toLowerCase())) {
+                r.add(e);
+              }
+            });
+
+            r.sort((a, b) =>
+                (Geolocator.distanceBetween(me, me1, a.latitude, a.longitude)
+                            .round() /
+                        1000)
+                    .compareTo((Geolocator.distanceBetween(
+                                me, me1, b.latitude, b.longitude)
+                            .round() /
+                        1000)));
+
+            emit(state.copyWith(
+                status: StateStatus.success(data: r.isEmpty ? null : r)));
+          },
+          orElse: () => null);
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/presentation/common/colors.dart';
+import 'package:flutter_map/presentation/partner/list/bloc/partner_list_bloc.dart';
 import 'package:flutter_map/presentation/partner/sliding_panel/cubit/partner_sliding_panel_cubit.dart';
 
 class PartnerSlidingPanelSearchWidget extends StatefulWidget {
@@ -83,6 +84,9 @@ class _PartnerSlidingPanelSearchWidgetState
                       child: TextFormField(
                         focusNode: _focusNode,
                         onChanged: ((value) {
+                          context
+                              .read<PartnerListBloc>()
+                              .add(ChangedKeyWordEvent(keyWord: value));
                           if (value.isNotEmpty) {
                             if (_textFilled == false) {
                               setState(() {
@@ -105,6 +109,9 @@ class _PartnerSlidingPanelSearchWidgetState
                           suffixIcon: _textFilled
                               ? GestureDetector(
                                   onTap: () {
+                                    context
+                                        .read<PartnerListBloc>()
+                                        .add(ChangedKeyWordEvent(keyWord: ""));
                                     _controller.text = "";
                                     FocusScope.of(context)
                                         .requestFocus(_focusNode);
