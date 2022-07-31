@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/domain/partner/entity/partner.dart';
-import 'package:flutter_map/presentation/partner/sliding_panel/cubit/partner_sliding_panel_cubit.dart';
+import 'package:flutter_map/presentation/partner/sliding_panel/bloc/partner_sliding_panel_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -45,10 +45,11 @@ class _PartnerSlidingPanelListCardState
             if (!currentFocus.hasPrimaryFocus) {
               currentFocus.unfocus();
             }
-            context.read<PartnerSlidingPanelCubit>().onTap(
-                widget.partner.latitude,
-                widget.partner.longitude,
-                widget.partner.id);
+            context.read<PartnerSlidingPanelBloc>().add(
+                TapPartnerSlidingPanelEvent(
+                    latitude: widget.partner.latitude,
+                    longitude: widget.partner.longitude,
+                    markerId: widget.partner.id));
           },
           child: Card(
             child: Column(

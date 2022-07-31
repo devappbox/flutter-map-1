@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/presentation/common/colors.dart';
 import 'package:flutter_map/presentation/partner/list/bloc/partner_list_bloc.dart';
-import 'package:flutter_map/presentation/partner/sliding_panel/cubit/partner_sliding_panel_cubit.dart';
+import 'package:flutter_map/presentation/partner/sliding_panel/bloc/partner_sliding_panel_bloc.dart';
+//import 'package:flutter_map/presentation/partner/sliding_panel/cubit/partner_sliding_panel_cubit.dart';
 
 class PartnerSlidingPanelSearchWidget extends StatefulWidget {
   const PartnerSlidingPanelSearchWidget({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _PartnerSlidingPanelSearchWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PartnerSlidingPanelCubit, PartnerSlidingPanelState>(
+    return BlocListener<PartnerSlidingPanelBloc, PartnerSlidingPanelState>(
       listenWhen: (p, c) => p.expand != c.expand,
       listener: (context, state) {
         setState(() {
@@ -64,8 +65,8 @@ class _PartnerSlidingPanelSearchWidgetState
                       )
                     : GestureDetector(
                         onTap: () => context
-                            .read<PartnerSlidingPanelCubit>()
-                            .onExpand(false),
+                            .read<PartnerSlidingPanelBloc>()
+                            .add(ExpandPartnerSlidingPanelEvent(expand: false)),
                         child: Icon(
                           Icons.arrow_downward_outlined,
                           size: 25.0,

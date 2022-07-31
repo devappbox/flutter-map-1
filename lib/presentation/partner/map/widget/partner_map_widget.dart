@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/presentation/partner/list/bloc/partner_list_bloc.dart';
-import 'package:flutter_map/presentation/partner/sliding_panel/cubit/partner_sliding_panel_cubit.dart';
+import 'package:flutter_map/presentation/partner/sliding_panel/bloc/partner_sliding_panel_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PartnerMapWidget extends StatefulWidget {
@@ -18,11 +18,13 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
   Completer<GoogleMapController> _controller = Completer();
   double _pad = 0.0;
   late LatLng _latlong;
+  late LatLng _latlongOnMove;
 
   @override
   void initState() {
     super.initState();
     _latlong = LatLng(-6.1512628884473175, 106.89188416785417);
+    _latlongOnMove = LatLng(-6.1512628884473175, 106.89188416785417);
   }
 
   @override
@@ -36,10 +38,11 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<PartnerSlidingPanelCubit, PartnerSlidingPanelState>(
+        BlocListener<PartnerSlidingPanelBloc, PartnerSlidingPanelState>(
             listenWhen: (p, c) {
           return p.tap != c.tap;
         }, listener: (context, state) {
+          debugPrint("$_latlong");
           _latlong = LatLng(state.latitude!, state.longitude!);
           _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
               CameraPosition(
@@ -49,10 +52,11 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
           _googleMapController
               .showMarkerInfoWindow(MarkerId(state.markerId ?? ""));
         }),
-        BlocListener<PartnerSlidingPanelCubit, PartnerSlidingPanelState>(
+        BlocListener<PartnerSlidingPanelBloc, PartnerSlidingPanelState>(
             listenWhen: (p, c) {
           return p.expand != c.expand;
         }, listener: (context, state) async {
+          final zoom = await _googleMapController.getZoomLevel();
           late double pad;
           if (state.expand == false) {
             pad = 0.0;
@@ -62,7 +66,6 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
           setState(() {
             _pad = pad;
           });
-          final zoom = await _googleMapController.getZoomLevel();
           await Future.delayed(Duration(milliseconds: 50));
           _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
               CameraPosition(target: _latlong, zoom: zoom)));
@@ -83,9 +86,10 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
               data?.forEach((e) {
                 _markers.add(Marker(
                     onTap: () {
-                      context
-                          .read<PartnerSlidingPanelCubit>()
-                          .onTapMarker(e.id);
+                      _latlong = LatLng(e.latitude, e.longitude);
+                      context.read<PartnerSlidingPanelBloc>()
+                        ..add(
+                            TapMarkerPartnerSlidingPanelEvent(markerId: e.id));
                     },
                     //icon: BitmapDescriptor.hueAzure.round(),
                     markerId: MarkerId(e.id),
@@ -94,9 +98,14 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
               });
               return GoogleMap(
                 onCameraMove: (position) {
-                  _latlong = LatLng(
+                  _latlongOnMove = LatLng(
                       position.target.latitude, position.target.longitude);
-                  //debugPrint("$_latlong");
+                  debugPrint("S $_latlongOnMove");
+                },
+                onCameraIdle: () {
+                  debugPrint("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+                  _latlong = _latlongOnMove;
+                  debugPrint("SSS $_latlong");
                 },
                 buildingsEnabled: false,
                 rotateGesturesEnabled: false,
@@ -115,16 +124,26 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                   // setState(() {});
                   // _pad = 200;
 
-                  await Future.delayed(Duration(milliseconds: 100));
-                  _googleMapController.animateCamera(
-                      CameraUpdate.newCameraPosition(CameraPosition(
-                          target:
-                              LatLng(-6.1512628884473175, 106.89188416785417),
-                          zoom: 14)));
+                  // await Future.delayed(Duration(milliseconds: 100));
+                  // _googleMapController.animateCamera(
+                  //     CameraUpdate.newCameraPosition(CameraPosition(
+                  //         target:
+                  //             LatLng(-6.1512628884473175, 106.89188416785417),
+                  //         zoom: 14)));
                 },
               );
             },
             loading: () => GoogleMap(
+                  onCameraMove: (position) {
+                    _latlongOnMove = LatLng(
+                        position.target.latitude, position.target.longitude);
+                    debugPrint("S $_latlongOnMove");
+                  },
+                  onCameraIdle: () {
+                    debugPrint("LLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+                    _latlong = _latlongOnMove;
+                    debugPrint("SSS $_latlong");
+                  },
                   buildingsEnabled: false,
                   rotateGesturesEnabled: false,
                   //myLocationEnabled: true,
@@ -142,15 +161,25 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                     // setState(() {});
                     // _pad = 200;
 
-                    await Future.delayed(Duration(milliseconds: 100));
-                    _googleMapController.animateCamera(
-                        CameraUpdate.newCameraPosition(CameraPosition(
-                            target:
-                                LatLng(-6.1512628884473175, 106.89188416785417),
-                            zoom: 14)));
+                    // await Future.delayed(Duration(milliseconds: 100));
+                    // _googleMapController.animateCamera(
+                    //     CameraUpdate.newCameraPosition(CameraPosition(
+                    //         target:
+                    //             LatLng(-6.1512628884473175, 106.89188416785417),
+                    //         zoom: 14)));
                   },
                 ),
             failure: (f) => GoogleMap(
+                  onCameraMove: (position) {
+                    _latlongOnMove = LatLng(
+                        position.target.latitude, position.target.longitude);
+                    debugPrint("S $_latlongOnMove");
+                  },
+                  onCameraIdle: () {
+                    debugPrint("FFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+                    _latlong = _latlongOnMove;
+                    debugPrint("SSS $_latlong");
+                  },
                   buildingsEnabled: false,
                   rotateGesturesEnabled: false,
                   //myLocationEnabled: true,
@@ -168,12 +197,12 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                     // setState(() {});
                     // _pad = 200;
 
-                    await Future.delayed(Duration(milliseconds: 100));
-                    _googleMapController.animateCamera(
-                        CameraUpdate.newCameraPosition(CameraPosition(
-                            target:
-                                LatLng(-6.1512628884473175, 106.89188416785417),
-                            zoom: 14)));
+                    // await Future.delayed(Duration(milliseconds: 100));
+                    // _googleMapController.animateCamera(
+                    //     CameraUpdate.newCameraPosition(CameraPosition(
+                    //         target:
+                    //             LatLng(-6.1512628884473175, 106.89188416785417),
+                    //         zoom: 14)));
                   },
                 ));
       })),
