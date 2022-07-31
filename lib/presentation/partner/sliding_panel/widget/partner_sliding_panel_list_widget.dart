@@ -26,7 +26,7 @@ class _PartnerSlidingPanelListWidgetState
           loading: () => SliverToBoxAdapter(
                 child: Align(
                     child: Text(
-                  "Sedang Mengambil Data...",
+                  "Collecting Data...",
                   style: TextStyle(
                     fontSize: 17.0,
                     color: Colors.blue,
