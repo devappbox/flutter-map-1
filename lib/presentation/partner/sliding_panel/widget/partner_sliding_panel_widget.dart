@@ -5,7 +5,6 @@ import 'package:flutter_map/presentation/partner/map/widget/partner_map_widget.d
 import 'package:flutter_map/presentation/partner/sliding_panel/cubit/partner_sliding_panel_cubit.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:collection/collection.dart';
 
 import '../delegate/sliding_panel_search_delegate.dart';
 import 'partner_sliding_panel_list_widget.dart';
