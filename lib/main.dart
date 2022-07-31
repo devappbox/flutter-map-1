@@ -41,20 +41,19 @@ class MyApp extends StatelessWidget {
         ),
         home: Builder(
           builder: ((context) => Scaffold(
-                body: Container(
-                  child: Align(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const PartnerMainScreen()),
-                      ),
-                      child: const Text('Map & Partner Screen'),
-                    ),
-                  ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PartnerMainScreen()),
+                    );
+                  },
+                  child: Icon(Icons.map_outlined),
                 ),
+                body: Container(),
               )),
         ));
   }

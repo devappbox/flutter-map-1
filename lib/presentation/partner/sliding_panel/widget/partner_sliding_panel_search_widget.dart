@@ -113,8 +113,8 @@ class _PartnerSlidingPanelSearchWidgetState
                                         .read<PartnerListBloc>()
                                         .add(ChangedKeyWordEvent(keyWord: ""));
                                     _controller.text = "";
-                                    FocusScope.of(context)
-                                        .requestFocus(_focusNode);
+                                    // FocusScope.of(context)
+                                    //     .requestFocus(_focusNode);
                                     setState(() {
                                       _textFilled = false;
                                     });

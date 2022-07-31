@@ -7,12 +7,16 @@ part 'partner_sliding_panel_cubit.freezed.dart';
 class PartnerSlidingPanelCubit extends Cubit<PartnerSlidingPanelState> {
   PartnerSlidingPanelCubit() : super(PartnerSlidingPanelState.initial());
 
-  onTap(double latitude, double longitude, String markId) async {
+  onTap(double latitude, double longitude, String markerId) async {
     emit(state.copyWith(
         tap: !state.tap,
         latitude: latitude,
         longitude: longitude,
-        markId: markId));
+        markerId: markerId));
+  }
+
+  onTapMarker(String markerId) async {
+    emit(state.copyWith(tapMarker: !state.tapMarker, markerId: markerId));
   }
 
   onExpand(bool expand) async {

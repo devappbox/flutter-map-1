@@ -20,7 +20,8 @@ mixin _$PartnerSlidingPanelState {
   double? get longitude => throw _privateConstructorUsedError;
   bool get tap => throw _privateConstructorUsedError;
   bool get expand => throw _privateConstructorUsedError;
-  String? get markId => throw _privateConstructorUsedError;
+  String? get markerId => throw _privateConstructorUsedError;
+  bool get tapMarker => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PartnerSlidingPanelStateCopyWith<PartnerSlidingPanelState> get copyWith =>
@@ -37,7 +38,8 @@ abstract class $PartnerSlidingPanelStateCopyWith<$Res> {
       double? longitude,
       bool tap,
       bool expand,
-      String? markId});
+      String? markerId,
+      bool tapMarker});
 }
 
 /// @nodoc
@@ -55,7 +57,8 @@ class _$PartnerSlidingPanelStateCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? tap = freezed,
     Object? expand = freezed,
-    Object? markId = freezed,
+    Object? markerId = freezed,
+    Object? tapMarker = freezed,
   }) {
     return _then(_value.copyWith(
       latitude: latitude == freezed
@@ -74,10 +77,14 @@ class _$PartnerSlidingPanelStateCopyWithImpl<$Res>
           ? _value.expand
           : expand // ignore: cast_nullable_to_non_nullable
               as bool,
-      markId: markId == freezed
-          ? _value.markId
-          : markId // ignore: cast_nullable_to_non_nullable
+      markerId: markerId == freezed
+          ? _value.markerId
+          : markerId // ignore: cast_nullable_to_non_nullable
               as String?,
+      tapMarker: tapMarker == freezed
+          ? _value.tapMarker
+          : tapMarker // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -95,7 +102,8 @@ abstract class _$$_PartnerSlidingPanelStateCopyWith<$Res>
       double? longitude,
       bool tap,
       bool expand,
-      String? markId});
+      String? markerId,
+      bool tapMarker});
 }
 
 /// @nodoc
@@ -116,7 +124,8 @@ class __$$_PartnerSlidingPanelStateCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? tap = freezed,
     Object? expand = freezed,
-    Object? markId = freezed,
+    Object? markerId = freezed,
+    Object? tapMarker = freezed,
   }) {
     return _then(_$_PartnerSlidingPanelState(
       latitude: latitude == freezed
@@ -135,10 +144,14 @@ class __$$_PartnerSlidingPanelStateCopyWithImpl<$Res>
           ? _value.expand
           : expand // ignore: cast_nullable_to_non_nullable
               as bool,
-      markId: markId == freezed
-          ? _value.markId
-          : markId // ignore: cast_nullable_to_non_nullable
+      markerId: markerId == freezed
+          ? _value.markerId
+          : markerId // ignore: cast_nullable_to_non_nullable
               as String?,
+      tapMarker: tapMarker == freezed
+          ? _value.tapMarker
+          : tapMarker // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -151,7 +164,8 @@ class _$_PartnerSlidingPanelState implements _PartnerSlidingPanelState {
       required this.longitude,
       required this.tap,
       required this.expand,
-      required this.markId});
+      required this.markerId,
+      required this.tapMarker});
 
   @override
   final double? latitude;
@@ -162,11 +176,13 @@ class _$_PartnerSlidingPanelState implements _PartnerSlidingPanelState {
   @override
   final bool expand;
   @override
-  final String? markId;
+  final String? markerId;
+  @override
+  final bool tapMarker;
 
   @override
   String toString() {
-    return 'PartnerSlidingPanelState(latitude: $latitude, longitude: $longitude, tap: $tap, expand: $expand, markId: $markId)';
+    return 'PartnerSlidingPanelState(latitude: $latitude, longitude: $longitude, tap: $tap, expand: $expand, markerId: $markerId, tapMarker: $tapMarker)';
   }
 
   @override
@@ -178,7 +194,8 @@ class _$_PartnerSlidingPanelState implements _PartnerSlidingPanelState {
             const DeepCollectionEquality().equals(other.longitude, longitude) &&
             const DeepCollectionEquality().equals(other.tap, tap) &&
             const DeepCollectionEquality().equals(other.expand, expand) &&
-            const DeepCollectionEquality().equals(other.markId, markId));
+            const DeepCollectionEquality().equals(other.markerId, markerId) &&
+            const DeepCollectionEquality().equals(other.tapMarker, tapMarker));
   }
 
   @override
@@ -188,7 +205,8 @@ class _$_PartnerSlidingPanelState implements _PartnerSlidingPanelState {
       const DeepCollectionEquality().hash(longitude),
       const DeepCollectionEquality().hash(tap),
       const DeepCollectionEquality().hash(expand),
-      const DeepCollectionEquality().hash(markId));
+      const DeepCollectionEquality().hash(markerId),
+      const DeepCollectionEquality().hash(tapMarker));
 
   @JsonKey(ignore: true)
   @override
@@ -203,7 +221,8 @@ abstract class _PartnerSlidingPanelState implements PartnerSlidingPanelState {
       required final double? longitude,
       required final bool tap,
       required final bool expand,
-      required final String? markId}) = _$_PartnerSlidingPanelState;
+      required final String? markerId,
+      required final bool tapMarker}) = _$_PartnerSlidingPanelState;
 
   @override
   double? get latitude;
@@ -214,7 +233,9 @@ abstract class _PartnerSlidingPanelState implements PartnerSlidingPanelState {
   @override
   bool get expand;
   @override
-  String? get markId;
+  String? get markerId;
+  @override
+  bool get tapMarker;
   @override
   @JsonKey(ignore: true)
   _$$_PartnerSlidingPanelStateCopyWith<_$_PartnerSlidingPanelState>

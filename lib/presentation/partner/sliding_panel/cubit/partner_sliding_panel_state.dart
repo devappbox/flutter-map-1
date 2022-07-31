@@ -7,9 +7,15 @@ class PartnerSlidingPanelState with _$PartnerSlidingPanelState {
     required double? longitude,
     required bool tap,
     required bool expand,
-    required String? markId,
+    required String? markerId,
+    required bool tapMarker,
   }) = _PartnerSlidingPanelState;
 
   factory PartnerSlidingPanelState.initial() => const PartnerSlidingPanelState(
-      latitude: null, longitude: null, tap: false, expand: false, markId: null);
+      latitude: null,
+      longitude: null,
+      tap: false,
+      expand: false,
+      markerId: null,
+      tapMarker: false);
 }

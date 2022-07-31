@@ -40,10 +40,9 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
           CameraPosition(
               target: LatLng(state.latitude!, state.longitude!), zoom: 17)));
 
-      _googleMapController.showMarkerInfoWindow(MarkerId(state.markId ?? ""));
+      _googleMapController.showMarkerInfoWindow(MarkerId(state.markerId ?? ""));
     }, child: BlocBuilder<PartnerListBloc, PartnerListState>(
             builder: ((context, state) {
-      debugPrint("OKKKKKKKKKKKKKKKKKKK");
       return state.status.when(
           initial: () => Container(),
           success: (data) {
@@ -56,14 +55,15 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                 infoWindow: InfoWindow(title: "I Am Here/My Location")));
             data?.forEach((e) {
               _markers.add(Marker(
-                  onTap: () {},
+                  onTap: () {
+                    context.read<PartnerSlidingPanelCubit>().onTapMarker(e.id);
+                  },
                   //icon: BitmapDescriptor.hueAzure.round(),
                   markerId: MarkerId(e.id),
                   position: LatLng(e.latitude, e.longitude),
                   infoWindow: InfoWindow(title: e.name)));
             });
             return GoogleMap(
-              padding: EdgeInsets.only(bottom: _pad),
               buildingsEnabled: false,
               rotateGesturesEnabled: false,
               //myLocationEnabled: true,
@@ -73,7 +73,7 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                 zoom: 14,
               ),
               markers: Set<Marker>.of(_markers),
-              //padding: EdgeInsets.only(bottom: _pad, top: _pad1),
+              padding: EdgeInsets.only(bottom: _pad),
               onMapCreated: (controller) async {
                 _googleMapController = controller;
                 _controller.complete(controller);
