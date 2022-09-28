@@ -103,25 +103,15 @@ class __$$_PartnerListStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PartnerListState
-    with DiagnosticableTreeMixin
-    implements _PartnerListState {
+class _$_PartnerListState implements _PartnerListState {
   const _$_PartnerListState({required this.status});
 
   @override
   final StateStatus<FailureExceptions, List<Partner>?> status;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PartnerListState(status: $status)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PartnerListState'))
-      ..add(DiagnosticsProperty('status', status));
   }
 
   @override
@@ -248,25 +238,15 @@ class __$$ChangedKeyWordEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChangedKeyWordEvent
-    with DiagnosticableTreeMixin
-    implements ChangedKeyWordEvent {
+class _$ChangedKeyWordEvent implements ChangedKeyWordEvent {
   const _$ChangedKeyWordEvent({required this.keyWord});
 
   @override
   final String keyWord;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PartnerListEvent.changed(keyWord: $keyWord)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PartnerListEvent.changed'))
-      ..add(DiagnosticsProperty('keyWord', keyWord));
   }
 
   @override
@@ -395,9 +375,7 @@ class __$$CollectPartnerListEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectPartnerListEvent
-    with DiagnosticableTreeMixin
-    implements CollectPartnerListEvent {
+class _$CollectPartnerListEvent implements CollectPartnerListEvent {
   const _$CollectPartnerListEvent({required final List<Partner>? partners})
       : _partners = partners;
 
@@ -411,16 +389,8 @@ class _$CollectPartnerListEvent
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PartnerListEvent.collect(partners: $partners)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PartnerListEvent.collect'))
-      ..add(DiagnosticsProperty('partners', partners));
   }
 
   @override

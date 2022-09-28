@@ -25,8 +25,8 @@ class _PartnerSlidingPanelListCardState
     extends State<PartnerSlidingPanelListCard> {
   @override
   Widget build(BuildContext context) {
-    final me = -6.1512628884473175;
-    final me1 = 106.89188416785417;
+    final me = -6.1651366269863335;
+    final me1 = 106.87359415250097;
 
     double distanceInMeters = Geolocator.distanceBetween(
                 me, me1, widget.partner.latitude, widget.partner.longitude)
@@ -72,9 +72,12 @@ class _PartnerSlidingPanelListCardState
                       //Spacer(),
                       Row(
                         children: [
-                          Icon(
-                            Icons.home_outlined,
-                            size: 25.0,
+                          Image.asset(
+                            "assets/images/image.jpg",
+                            gaplessPlayback: true,
+                            //fit: BoxFit.cover,
+                            width: 30,
+                            height: 30,
                           ),
                           SizedBox(
                             width: 5.0,

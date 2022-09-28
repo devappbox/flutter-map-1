@@ -55,23 +55,23 @@ class _PartnerSlidingPanelSearchWidgetState
                     topLeft: Radius.circular(40.00))),
             child: Row(
               children: [
-                _isExpand == false
-                    ? GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Icon(
-                          Icons.arrow_back_outlined,
-                          size: 25.0,
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: () => context
-                            .read<PartnerSlidingPanelBloc>()
-                            .add(ExpandPartnerSlidingPanelEvent(expand: false)),
-                        child: Icon(
-                          Icons.arrow_downward_outlined,
-                          size: 25.0,
-                        ),
-                      ),
+                // _isExpand == false
+                //     ? GestureDetector(
+                //         onTap: () => Navigator.pop(context),
+                //         child: Icon(
+                //           Icons.arrow_back_outlined,
+                //           size: 25.0,
+                //         ),
+                //       )
+                //     : GestureDetector(
+                //         onTap: () => context
+                //             .read<PartnerSlidingPanelBloc>()
+                //             .add(ExpandPartnerSlidingPanelEvent(expand: false)),
+                //         child: Icon(
+                //           Icons.arrow_downward_outlined,
+                //           size: 25.0,
+                //         ),
+                //       ),
                 // SizedBox(
                 //   width: 2.0,
                 // ),
@@ -127,7 +127,7 @@ class _PartnerSlidingPanelSearchWidgetState
                               : null,
                           filled: true,
                           fillColor: Colors.white,
-                          hintText: "Search Our Partners...",
+                          hintText: "Search Our Merchants...",
                           //hintTextDirection: TextDirection.ltr,
                           alignLabelWithHint: true,
                           hintStyle: const TextStyle(

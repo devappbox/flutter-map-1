@@ -27,7 +27,8 @@ class PartnerSlidingPanelBloc
     });
 
     on<TapMarkerPartnerSlidingPanelEvent>((event, emit) async {
-      emit(state.copyWith(markerId: event.markerId));
+      emit(state.copyWith(
+          markerId: event.markerId, tapMarker: !state.tapMarker));
     });
   }
 }

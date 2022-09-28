@@ -20,11 +20,14 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
   late LatLng _latlong;
   late LatLng _latlongOnMove;
 
+  Set<Marker>? _markers = <Marker>{};
+  BitmapDescriptor? myMarker;
+
   @override
   void initState() {
     super.initState();
-    _latlong = LatLng(-6.1512628884473175, 106.89188416785417);
-    _latlongOnMove = LatLng(-6.1512628884473175, 106.89188416785417);
+    _latlong = LatLng(-6.1651366269863335, 106.87359415250097);
+    _latlongOnMove = LatLng(-6.1651366269863335, 106.87359415250097);
   }
 
   @override
@@ -61,14 +64,14 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
           if (state.expand == false) {
             pad = 0.0;
           } else {
-            pad = 200.0;
+            pad = 300.0;
           }
-          setState(() {
-            _pad = pad;
-          });
-          await Future.delayed(Duration(milliseconds: 50));
-          _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-              CameraPosition(target: _latlong, zoom: zoom)));
+          // setState(() {
+          //   _pad = pad;
+          // });
+          // await Future.delayed(Duration(milliseconds: 50));
+          // _googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+          //     CameraPosition(target: _latlong, zoom: zoom)));
         })
       ],
       child: BlocBuilder<PartnerListBloc, PartnerListState>(
@@ -76,26 +79,8 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
         return state.status.when(
             initial: () => Container(),
             success: (data) {
-              List<Marker> _markers = <Marker>[];
-              _markers.add(Marker(
-                  onTap: () {},
-                  //icon: BitmapDescriptor.hueAzure.round(),
-                  markerId: MarkerId('myId'),
-                  position: LatLng(-6.1512628884473175, 106.89188416785417),
-                  infoWindow: InfoWindow(title: "I Am Here/My Location")));
-              data?.forEach((e) {
-                _markers.add(Marker(
-                    onTap: () {
-                      _latlong = LatLng(e.latitude, e.longitude);
-                      context.read<PartnerSlidingPanelBloc>()
-                        ..add(
-                            TapMarkerPartnerSlidingPanelEvent(markerId: e.id));
-                    },
-                    //icon: BitmapDescriptor.hueAzure.round(),
-                    markerId: MarkerId(e.id),
-                    position: LatLng(e.latitude, e.longitude),
-                    infoWindow: InfoWindow(title: e.name)));
-              });
+              //List<Marker> _markers = <Marker>[];
+
               return GoogleMap(
                 onCameraMove: (position) {
                   _latlongOnMove = LatLng(
@@ -112,24 +97,48 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                 //myLocationEnabled: true,
                 //myLocationButtonEnabled: true,
                 initialCameraPosition: CameraPosition(
-                  target: LatLng(-6.1512628884473175, 106.89188416785417),
+                  target: LatLng(-6.1651366269863335, 106.87359415250097),
                   zoom: 14,
                 ),
-                markers: Set<Marker>.of(_markers),
+                markers: _markers!,
                 padding: EdgeInsets.only(bottom: _pad),
                 onMapCreated: (controller) async {
                   _googleMapController = controller;
                   _controller.complete(controller);
                   await Future.delayed(Duration(milliseconds: 100));
-                  // setState(() {});
-                  // _pad = 200;
+                  _markers?.add(Marker(
+                      onTap: () {},
+                      //icon: BitmapDescriptor.hueAzure.round(),
+                      markerId: MarkerId('myId'),
+                      position: LatLng(-6.1651366269863335, 106.87359415250097),
+                      infoWindow: InfoWindow(title: "I Am Here/My Location")));
 
-                  // await Future.delayed(Duration(milliseconds: 100));
-                  // _googleMapController.animateCamera(
-                  //     CameraUpdate.newCameraPosition(CameraPosition(
-                  //         target:
-                  //             LatLng(-6.1512628884473175, 106.89188416785417),
-                  //         zoom: 14)));
+                  data?.forEach((e) async {
+                    myMarker = await BitmapDescriptor.fromAssetImage(
+                      ImageConfiguration(size: Size(0.05, 0.05)),
+                      "assets/images/winn1.jpg",
+                    );
+                    _markers?.add(Marker(
+                        onTap: () {
+                          _latlong = LatLng(e.latitude, e.longitude);
+                          context.read<PartnerSlidingPanelBloc>()
+                            ..add(TapMarkerPartnerSlidingPanelEvent(
+                                markerId: e.id));
+                        },
+                        icon: myMarker!,
+                        markerId: MarkerId(e.id),
+                        position: LatLng(e.latitude, e.longitude),
+                        infoWindow: InfoWindow(title: e.name)));
+                  });
+                  setState(() {});
+                  _pad = 200;
+
+                  await Future.delayed(Duration(milliseconds: 100));
+                  _googleMapController.animateCamera(
+                      CameraUpdate.newCameraPosition(CameraPosition(
+                          target:
+                              LatLng(-6.1651366269863335, 106.87359415250097),
+                          zoom: 14)));
                 },
               );
             },
@@ -149,7 +158,7 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                   //myLocationEnabled: true,
                   //myLocationButtonEnabled: true,
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(-6.1512628884473175, 106.89188416785417),
+                    target: LatLng(-6.1651366269863335, 106.87359415250097),
                     zoom: 14,
                   ),
                   //markers: Set<Marker>.of(_markers),
@@ -165,7 +174,7 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                     // _googleMapController.animateCamera(
                     //     CameraUpdate.newCameraPosition(CameraPosition(
                     //         target:
-                    //             LatLng(-6.1512628884473175, 106.89188416785417),
+                    //             LatLng(-6.1651366269863335, 106.87359415250097),
                     //         zoom: 14)));
                   },
                 ),
@@ -185,7 +194,7 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                   //myLocationEnabled: true,
                   //myLocationButtonEnabled: true,
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(-6.1512628884473175, 106.89188416785417),
+                    target: LatLng(-6.1651366269863335, 106.87359415250097),
                     zoom: 14,
                   ),
                   //markers: Set<Marker>.of(_markers),
@@ -201,7 +210,7 @@ class _PartnerMapWidgetState extends State<PartnerMapWidget> {
                     // _googleMapController.animateCamera(
                     //     CameraUpdate.newCameraPosition(CameraPosition(
                     //         target:
-                    //             LatLng(-6.1512628884473175, 106.89188416785417),
+                    //             LatLng(-6.1651366269863335, 106.87359415250097),
                     //         zoom: 14)));
                   },
                 ));

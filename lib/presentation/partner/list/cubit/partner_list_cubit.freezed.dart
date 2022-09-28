@@ -103,25 +103,15 @@ class __$$_PartnerListStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PartnerListState
-    with DiagnosticableTreeMixin
-    implements _PartnerListState {
+class _$_PartnerListState implements _PartnerListState {
   const _$_PartnerListState({required this.status});
 
   @override
   final StateStatus<FailureExceptions, List<Partner>?> status;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PartnerListState(status: $status)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PartnerListState'))
-      ..add(DiagnosticsProperty('status', status));
   }
 
   @override

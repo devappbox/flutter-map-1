@@ -7,6 +7,7 @@ import 'package:flutter_map/presentation/partner/list/bloc/partner_list_bloc.dar
 import 'package:flutter_map/presentation/partner/list/cubit/partner_list_cubit.dart';
 import 'package:flutter_map/presentation/partner/main/screen/partner_main_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 void main() async {
@@ -43,23 +44,87 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Builder(
-          builder: ((context) => Scaffold(
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PartnerMainScreen()),
-                    );
-                  },
-                  child: Icon(Icons.map_outlined),
-                ),
-                body: Container(),
-              )),
-        ));
+        home: Scaffold(
+          backgroundColor: Colors.grey.shade200,
+          appBar: AppBar(
+            title: Text('Simple Example'),
+          ),
+          body: SlidingSheet(
+              elevation: 8,
+              cornerRadius: 16,
+              snapSpec: const SnapSpec(
+                // Enable snapping. This is true by default.
+                snap: true,
+                // Set custom snapping points.
+                snappings: [0.4, 0.7, 0.8],
+                // Define to what the snappings relate to. In this case,
+                // the total available space that the sheet can expand to.
+                positioning: SnapPositioning.relativeToAvailableSpace,
+              ),
+              // The body widget will be displayed under the SlidingSheet
+              // and a parallax effect can be applied to it.
+              body: Center(
+                child: Text('This widget is below the SlidingSheet'),
+              ),
+              customBuilder: buildInfiniteChild
+
+              // (context, state) {
+              //   // This is the content of the sheet that will get
+              //   // scrolled, if the content is bigger than the available
+              //   // height of the sheet.
+              //   return ListView.builder(
+              //       itemCount: 5,
+              //       itemBuilder: (BuildContext context, int index) {
+              //         return SingleChildScrollView(
+              //           child: ListTile(
+              //               leading: const Icon(Icons.list),
+              //               trailing: const Text(
+              //                 "GFG",
+              //                 style: TextStyle(color: Colors.green, fontSize: 15),
+              //               ),
+              //               title: Text("List item $index")),
+              //         );
+              //       });
+              //},
+              ),
+        )
+
+        // Builder(
+        //   builder: ((context) => Scaffold(
+        //         floatingActionButtonLocation:
+        //             FloatingActionButtonLocation.centerFloat,
+        //         floatingActionButton: FloatingActionButton(
+        //           onPressed: () {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (context) => const PartnerMainScreen()),
+        //             );
+        //           },
+        //           child: Icon(Icons.map_outlined),
+        //         ),
+        //         body: Container(),
+        //       )),
+
+        // )
+
+        );
+  }
+
+  Widget buildInfiniteChild(
+    BuildContext context,
+    ScrollController controller,
+    SheetState state,
+  ) {
+    return ListView.separated(
+      controller: controller,
+      itemBuilder: (context, index) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Text('$index'),
+      ),
+      separatorBuilder: (context, index) => const Divider(),
+      itemCount: 200,
+    );
   }
 }
 

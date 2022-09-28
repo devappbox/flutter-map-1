@@ -21,6 +21,7 @@ class _PartnerMainWidgetState extends State<PartnerMainWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: BlocBuilder<PartnerListCubit, PartnerListState>(
           builder: ((context, state) {
         return state.status.when(

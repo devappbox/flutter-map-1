@@ -50,8 +50,8 @@ class PartnerListBloc extends Bloc<PartnerListEvent, PartnerListState> {
           success: (data) async {
             emit(state.copyWith(status: const StateStatus.loading()));
 
-            final me = -6.1512628884473175;
-            final me1 = 106.89188416785417;
+            final me = -6.1651366269863335;
+            final me1 = 106.87359415250097;
 
             List<Partner> r =
                 List<Partner>.from(data == null ? [] : data.toList());
@@ -74,8 +74,8 @@ class PartnerListBloc extends Bloc<PartnerListEvent, PartnerListState> {
           success: (data) async {
             emit(state.copyWith(status: const StateStatus.loading()));
 
-            final me = -6.1512628884473175;
-            final me1 = 106.89188416785417;
+            final me = -6.1651366269863335;
+            final me1 = 106.87359415250097;
             List<Partner>? r = [];
 
             data?.forEach((e) {
@@ -108,8 +108,8 @@ class PartnerListBloc extends Bloc<PartnerListEvent, PartnerListState> {
     await Future.delayed(Duration(milliseconds: 1000));
     debugPrint("PARTNER LIST BLOC DATA ${event.partners}");
 
-    final me = -6.1512628884473175;
-    final me1 = 106.89188416785417;
+    final me = -6.1651366269863335;
+    final me1 = 106.87359415250097;
 
     List<Partner> r = List<Partner>.from(
         event.partners == null ? [] : event.partners!.toList());

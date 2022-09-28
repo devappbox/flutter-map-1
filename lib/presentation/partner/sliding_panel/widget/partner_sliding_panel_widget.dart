@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_map/presentation/partner/list/bloc/partner_list_bloc.dart';
 import 'package:flutter_map/presentation/partner/map/widget/partner_map_widget.dart';
 import 'package:flutter_map/presentation/partner/sliding_panel/bloc/partner_sliding_panel_bloc.dart';
@@ -22,6 +23,12 @@ class _PartnerSlidingPanelWidgetState extends State<PartnerSlidingPanelWidget> {
   final _scrollDirection = Axis.vertical;
 
   late AutoScrollController _autoScrollController;
+
+  double _height = 355.0;
+
+  double _width = 350.0;
+
+  bool _expanded = false;
 
   @override
   void initState() {
@@ -57,6 +64,8 @@ class _PartnerSlidingPanelWidgetState extends State<PartnerSlidingPanelWidget> {
                     int? index = r?.indexWhere((e) => e.id == state.markerId);
                     if (index != null) {
                       if (index != -1) {
+                        debugPrint(
+                            "PARTNER SLIDING PANEL WIDGET AUTO SCROLL INDEX");
                         _autoScrollController.scrollToIndex(index,
                             preferPosition: AutoScrollPosition.begin);
                       }
@@ -67,37 +76,66 @@ class _PartnerSlidingPanelWidgetState extends State<PartnerSlidingPanelWidget> {
       ],
       child: SlidingUpPanel(
         controller: _panelController,
-        onPanelOpened: () => context
-            .read<PartnerSlidingPanelBloc>()
-            .add(ExpandPartnerSlidingPanelEvent(expand: true)),
-        onPanelClosed: () => context
-            .read<PartnerSlidingPanelBloc>()
-            .add(ExpandPartnerSlidingPanelEvent(expand: false)),
+        onPanelOpened: () => setState(() {
+          _height = 700.0;
+          _width = 350.0;
+          _expanded = true;
+        }),
+        // context
+        //     .read<PartnerSlidingPanelBloc>()
+        //     .add(ExpandPartnerSlidingPanelEvent(expand: true)),
+        onPanelClosed: () => setState(() {
+          _height = 355.0;
+          _width = 350.0;
+          _expanded = false;
+        }),
+        //panelSnapping: true,
+        //snapPoint: 0.5,
+        // context
+        //     .read<PartnerSlidingPanelBloc>()
+        //     .add(ExpandPartnerSlidingPanelEvent(expand: false)),
         header: GestureDetector(
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey[50],
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(40.00),
-                    topLeft: Radius.circular(40.00))),
-            width: MediaQuery.of(context).size.width,
-            height: 30,
-            child: Center(
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 8),
-                width: 65,
-                height: 3,
+          onTap: () {
+            if (_expanded == false)
+              _panelController.open();
+            else
+              _panelController.close();
+          },
+          child: Column(
+            children: [
+              SizedBox(height: 10.0),
+              Container(
                 decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    borderRadius: BorderRadius.circular(10.0)),
+                    color: Colors.grey[50],
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(40.00),
+                        topLeft: Radius.circular(40.00))),
+                width: MediaQuery.of(context).size.width,
+                //height: 30,
+                child: Center(
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 20,
+                    width: 60,
+                    child: ClipPath(
+                      clipper: ArrowClipper(
+                          30, 100, _expanded == false ? Edge.TOP : Edge.BOTTOM),
+                      child: Container(
+                        height: 30,
+                        color: Color.fromARGB(255, 190, 185, 185),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
         isDraggable: true,
-        minHeight: 90,
-        maxHeight: 450,
+        minHeight: _width,
+        maxHeight: _height,
+        //MediaQuery.of(context).size.height - 50,
         //snapPoint: 0.5,
         //panelSnapping: true,
         borderRadius: BorderRadius.only(
@@ -135,5 +173,41 @@ class _PartnerSlidingPanelWidgetState extends State<PartnerSlidingPanelWidget> {
         body: PartnerMapWidget(),
       ),
     );
+  }
+}
+
+class TrianglePainter extends CustomPainter {
+  final Color strokeColor;
+  final PaintingStyle paintingStyle;
+  final double strokeWidth;
+
+  TrianglePainter(
+      {this.strokeColor = Colors.black,
+      this.strokeWidth = 3,
+      this.paintingStyle = PaintingStyle.stroke});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = strokeColor
+      ..strokeWidth = strokeWidth
+      ..style = paintingStyle;
+
+    canvas.drawPath(getTrianglePath(size.width, size.height), paint);
+  }
+
+  Path getTrianglePath(double x, double y) {
+    return Path()
+      ..moveTo(0, y)
+      ..lineTo(x / 2, 0)
+      ..lineTo(x, y)
+      ..lineTo(0, y);
+  }
+
+  @override
+  bool shouldRepaint(TrianglePainter oldDelegate) {
+    return oldDelegate.strokeColor != strokeColor ||
+        oldDelegate.paintingStyle != paintingStyle ||
+        oldDelegate.strokeWidth != strokeWidth;
   }
 }

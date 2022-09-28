@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     String c = v.toString();
 
     return MaterialApp(
-        title: 'Shops',
+        title: 'Map & Partner',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -306,7 +306,7 @@ class _HomeMainOrderSearchState extends State<HomeMainOrderSearch> {
                             : null,
                         filled: true,
                         fillColor: Colors.white,
-                        hintText: "Search Our Shops...",
+                        hintText: "Search Our Partners...",
                         //hintTextDirection: TextDirection.ltr,
                         alignLabelWithHint: true,
                         hintStyle: const TextStyle(
